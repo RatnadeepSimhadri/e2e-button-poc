@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <!-- Load Zoid first -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zoid/9.0.86/zoid.min.js"></script>
+    <!-- Load component definitions -->
+    <script src="/js/button-component.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 300px;
+        }
+        #button-container {
+            min-height: 40px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1><%= title %></h1>
+    <p>Welcome to our Zoid Cross-Window Application!</p>
+    <div id="button-container"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttonComponent = MyButton({
+            buttonText: 'Open Modal'
+        });
+
+        buttonComponent.render('#button-container')
+            .catch(err => {
+                console.error('Error rendering button:', err);
+            });
+    });
+</script>
+</body>
+</html>

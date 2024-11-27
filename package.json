@@ -1,0 +1,16 @@
+{
+  "name": "zoid-cross-window",
+  "version": "1.0.0",
+  "description": "Cross window application using zoid",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9"
+  },
+  "devDependencies": {
+    "nodemon": "latest"
+  }
+}
