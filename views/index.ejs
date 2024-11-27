@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <!-- Load Zoid first -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zoid/9.0.86/zoid.min.js"></script>
-    <!-- Load component definitions -->
-    <script src="/js/button-component.js"></script>
+    <script src="/dist/sdk.umd.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,12 +37,13 @@
 </div>
 
 <script>
+    const { SepaButton } = window.paypal
     document.addEventListener('DOMContentLoaded', () => {
-        const buttonComponent = MyButton({
-            buttonText: 'Open Modal'
+        const sepaButton = SepaButton({
+            buttonText: 'Pay with SEPA'
         });
 
-        buttonComponent.render('#button-container')
+        sepaButton.render('#button-container')
             .catch(err => {
                 console.error('Error rendering button:', err);
             });
