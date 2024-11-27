@@ -1,9 +1,7 @@
 <html>
 <head>
     <title>Button Component</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/zoid/9.0.86/zoid.min.js"></script>
-    <script src="/js/button-component.js"></script>
-    <script src="/js/popup-component.js"></script>
+    <script src="/dist/sdk.umd.js"></script>
     <style>
         .custom-button {
             padding: 10px 20px;
@@ -23,13 +21,15 @@
 <body style="margin: 0; padding: 0;">
 <button id="myButton" class="custom-button"><%= buttonText %></button>
 <script>
-    let popupInstance = null;
-    let modalOverlay = null;
-    let isClosing = false;
 
-    function createModalOverlay() {
-        const overlay = document.createElement('div');
-        overlay.style.cssText = `
+    document.addEventListener('DOMContentLoaded', () => {
+        let popupInstance = null;
+        let modalOverlay = null;
+        let isClosing = false;
+
+        function createModalOverlay() {
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -42,8 +42,8 @@
                 z-index: 1000;
             `;
 
-        const modalContainer = document.createElement('div');
-        modalContainer.style.cssText = `
+            const modalContainer = document.createElement('div');
+            modalContainer.style.cssText = `
                 background: white;
                 border-radius: 8px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -52,54 +52,56 @@
                 position: relative;
             `;
 
-        overlay.appendChild(modalContainer);
-        return { overlay, container: modalContainer };
-    }
-
-    function closeModal() {
-        if (!isClosing && popupInstance) {
-            isClosing = true;
-            setTimeout(() => {
-                popupInstance.close();
-                popupInstance = null;
-                if (modalOverlay) {
-                    modalOverlay.remove();
-                    modalOverlay = null;
-                }
-                isClosing = false;
-            }, 0);
+            overlay.appendChild(modalContainer);
+            return { overlay, container: modalContainer };
         }
-    }
 
-    async function showModal() {
-        if (popupInstance || isClosing) return;
-
-        try {
-            const { overlay, container } = createModalOverlay();
-            modalOverlay = overlay;
-            window.parent.document.body.appendChild(overlay);
-
-            popupInstance = PopupComponent({
-                onClose: closeModal,
-                title: 'Welcome Modal',
-                content: 'This is a modal rendered using Zoid!'
-            });
-
-            await popupInstance.render(container);
-
-            modalOverlay.addEventListener('click', (event) => {
-                if (event.target === modalOverlay) {
-                    closeModal();
-                }
-            });
-        } catch (error) {
-            console.error('Error showing modal:', error);
-            closeModal();
+        function closeModal() {
+            if (!isClosing && popupInstance) {
+                isClosing = true;
+                setTimeout(() => {
+                    popupInstance.close();
+                    popupInstance = null;
+                    if (modalOverlay) {
+                        modalOverlay.remove();
+                        modalOverlay = null;
+                    }
+                    isClosing = false;
+                }, 0);
+            }
         }
-    }
 
+        async function showModal() {
+            if (popupInstance || isClosing) return;
 
-    document.getElementById('myButton').addEventListener('click', showModal);
+            try {
+                const { overlay, container } = createModalOverlay();
+                modalOverlay = overlay;
+                window.parent.document.body.appendChild(overlay);
+
+                const { PopupComponent } = window.paypal;
+                popupInstance = PopupComponent({
+                    onClose: closeModal,
+                    title: 'Welcome Modal',
+                    content: 'This is a modal rendered using Zoid!'
+                });
+
+                await popupInstance.render(container);
+
+                modalOverlay.addEventListener('click', (event) => {
+                    if (event.target === modalOverlay) {
+                        closeModal();
+                    }
+                });
+            } catch (error) {
+                console.error('Error showing modal:', error);
+                closeModal();
+            }
+        }
+        document.getElementById('myButton').addEventListener('click', showModal);
+        document.getElementById('myButton').innerHTML = window.xprops.buttonText;
+    })
+
 </script>
 </body>
 </html>
