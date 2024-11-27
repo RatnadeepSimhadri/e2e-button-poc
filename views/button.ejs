@@ -98,12 +98,6 @@
         }
     }
 
-    // Listen for close message from popup
-    window.addEventListener('message', (event) => {
-        if (event.data && event.data.type === 'closeModal') {
-            closeModal();
-        }
-    });
 
     document.getElementById('myButton').addEventListener('click', showModal);
 </script>
