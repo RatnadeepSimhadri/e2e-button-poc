@@ -12,15 +12,10 @@ export const PopupComponent = create({
             type: 'function',
             required: true
         },
-        title: {
+        orderID: {
             type: 'string',
             queryParam: true,
-            default: 'Modal Title'
-        },
-        content: {
-            type: 'string',
-            queryParam: true,
-            default: 'Modal Content'
+            default: '<>'
         }
     }
 });

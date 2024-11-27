@@ -44,18 +44,15 @@
 <body>
 <div class="popup-content">
     <div class="popup-header">
-        <h2 id="modalTitle">Loading...</h2>
+        <h2 id="modalTitle"><%= title %></h2>
         <button class="close-button" id="closeButton">&times;</button>
     </div>
     <div class="popup-body" id="modalContent">
-        Loading content...
+        <%= content %>
     </div>
 </div>
 <script>
     let isClosing = false;
-
-    document.getElementById('modalTitle').textContent = window.xprops.title;
-    document.getElementById('modalContent').textContent = window.xprops.content;
 
     document.getElementById('closeButton').addEventListener('click', () => {
         if (!isClosing) {
