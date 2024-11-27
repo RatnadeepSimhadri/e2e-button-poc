@@ -11,6 +11,18 @@ export const SepaButton = create({
         buttonText: {
             type: 'string',
             default: 'Click Me'
+        },
+        createOrder: {
+            type: 'function',
+            required: true
+        },
+        onApprove: {
+            type: 'function',
+            required: false
+        },
+        onCancel: {
+            type: 'function',
+            required: false
         }
     }
 });

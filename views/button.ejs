@@ -79,11 +79,12 @@
                 modalOverlay = overlay;
                 window.parent.document.body.appendChild(overlay);
 
+                const { orderID } = await window.xprops.createOrder()
+
                 const { PopupComponent } = window.paypal;
                 popupInstance = PopupComponent({
                     onClose: closeModal,
-                    title: 'Welcome Modal',
-                    content: 'This is a modal rendered using Zoid!'
+                    orderID: orderID
                 });
 
                 await popupInstance.render(container);
