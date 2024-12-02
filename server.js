@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const crypto = require('crypto');
 
-const PORT = 3000;
+const PORT = 3001;
 
 
 app.set('view engine', 'ejs');
@@ -76,7 +76,7 @@ app.get('/button', (req, res) => {
 
 app.get('/popup', (req, res) => {
     res.render('popup', {
-        title: req.query.title || 'Default Modal Title',
+        title: req.query.title || 'Default Modal Page',
         content: req.query.content || 'Default Modal Content'
     });
 });
