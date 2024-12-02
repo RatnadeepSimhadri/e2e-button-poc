@@ -2,7 +2,7 @@ import { create } from 'zoid';
 
 export const PopupComponent = create({
     tag: 'popup-component',
-    url: 'http://localhost:3001/popup',
+    url: 'https://friendly-acorn-ggqqqxr6qpfw764-3000.app.github.dev/popup',
     dimensions: {
         width: '600px',
         height: '500px'

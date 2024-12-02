@@ -1,4 +1,4 @@
-var Ci = { env: {}, version: '"v18.20.4"' };
+var Ci = { env: {}, version: '"v20.17.0"' };
 typeof Ci > "u" && (window.process = {
   env: {
     NODE_ENV: "production"
@@ -8449,13 +8449,13 @@ function Wi() {
   }(ui)), ui.exports;
 }
 (function(Rn) {
-  var ei = { env: {}, version: '"v18.20.4"' }, yn = {};
+  var ei = { env: {}, version: '"v20.17.0"' }, yn = {};
   ei && yn && yn.ZOID_FRAME_ONLY ? (Rn.exports = Oi(), Rn.exports.default = Rn.exports) : (Rn.exports = Wi(), Rn.exports.default = Rn.exports);
 })(hi);
 var vi = hi.exports;
 const Si = vi.create({
   tag: "my-button-component",
-  url: "http://localhost:3001/button",
+  url: "https://friendly-acorn-ggqqqxr6qpfw764-3000.app.github.dev/button",
   dimensions: {
     width: "150px",
     height: "40px"
@@ -8480,7 +8480,7 @@ const Si = vi.create({
   }
 }), Di = vi.create({
   tag: "popup-component",
-  url: "http://localhost:3001/popup",
+  url: "https://friendly-acorn-ggqqqxr6qpfw764-3000.app.github.dev/popup",
   dimensions: {
     width: "600px",
     height: "500px"
