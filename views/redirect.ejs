@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message Content</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+        .content {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .message {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        .timestamp {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        .close-btn {
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .close-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="/dist/sdk.umd.js"></script>
+</head>
+<body>
+<div class="content">
+    <h2>Message Received</h2>
+    <div class="message">
+        <%= message %>
+        <div class="timestamp">Received at: <%= timestamp %></div>
+    </div>
+    <button class="close-btn" onclick="handleClose()">Close</button>
+</div>
+
+<script>
+    function handleClose() {
+        if (window.opener) {
+            window.close();
+        } else {
+            window.parent.postMessage({ type: 'zoid_close' }, '*');
+        }
+    }
+</script>
+</body>
+</html>

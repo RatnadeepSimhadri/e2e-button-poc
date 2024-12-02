@@ -2,20 +2,27 @@ import { create } from 'zoid';
 
 export const PopupComponent = create({
     tag: 'popup-component',
-    url: '/popup',
+    url: 'http://localhost:3001/popup',
     dimensions: {
-        width: '500px',
-        height: '300px'
+        width: '600px',
+        height: '500px'
     },
     props: {
         onClose: {
             type: 'function',
             required: true
         },
+        createOrder: {
+            type: 'function',
+            required: false
+        },
         orderID: {
             type: 'string',
             queryParam: true,
-            default: '<>'
+            default: ''
         }
-    }
+    },
+    defaultContext: 'popup',
+    allowClose: true,
+    scroll: true,
 });

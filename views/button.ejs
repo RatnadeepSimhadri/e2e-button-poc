@@ -24,82 +24,34 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         let popupInstance = null;
-        let modalOverlay = null;
         let isClosing = false;
 
-        function createModalOverlay() {
-            const overlay = document.createElement('div');
-            overlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background: rgba(0, 0, 0, 0.5);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            `;
-
-            const modalContainer = document.createElement('div');
-            modalContainer.style.cssText = `
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                width: 500px;
-                height: 300px;
-                position: relative;
-            `;
-
-            overlay.appendChild(modalContainer);
-            return { overlay, container: modalContainer };
-        }
-
-        function closeModal() {
-            if (!isClosing && popupInstance) {
-                isClosing = true;
-                setTimeout(() => {
-                    popupInstance.close();
-                    popupInstance = null;
-                    if (modalOverlay) {
-                        modalOverlay.remove();
-                        modalOverlay = null;
-                    }
-                    isClosing = false;
-                }, 0);
-            }
-        }
-
-        async function showModal() {
+        async function renderPopup() {
             if (popupInstance || isClosing) return;
 
             try {
-                const { overlay, container } = createModalOverlay();
-                modalOverlay = overlay;
-                window.parent.document.body.appendChild(overlay);
-
-                const { orderID } = await window.xprops.createOrder()
 
                 const { PopupComponent } = window.paypal;
+
                 popupInstance = PopupComponent({
-                    onClose: closeModal,
-                    orderID: orderID
+                    createOrder: async () => {
+                        const response =  await  window.xprops.createOrder();
+                        console.log(response);
+                        return response;
+                    },
+                    onClose: () => {
+                        console.log("Popup Closed");
+                        popupInstance = null;
+                    },
+                    orderID: ''
                 });
 
-                await popupInstance.render(container);
-
-                modalOverlay.addEventListener('click', (event) => {
-                    if (event.target === modalOverlay) {
-                        closeModal();
-                    }
-                });
+                await popupInstance.render();
             } catch (error) {
                 console.error('Error showing modal:', error);
-                closeModal();
             }
         }
-        document.getElementById('myButton').addEventListener('click', showModal);
+        document.getElementById('myButton').addEventListener('click', renderPopup);
         document.getElementById('myButton').innerHTML = window.xprops.buttonText;
     })
 

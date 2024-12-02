@@ -2,7 +2,7 @@ import { create } from 'zoid';
 
 export const SepaButton = create({
     tag: 'my-button-component',
-    url: '/button',
+    url: 'http://localhost:3001/button',
     dimensions: {
         width: '150px',
         height: '40px'

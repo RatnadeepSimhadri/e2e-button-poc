@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const crypto = require('crypto');
-const port = 3000;
+const port = 3001;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -46,6 +46,21 @@ const getContent = () => {
       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
       voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
       non proident,sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+      non proident,sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+      non proident,sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+      ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+      non proident,sunt in culpa qui officia deserunt mollit anim id est laborum.
   `
 }
 
@@ -64,7 +79,25 @@ app.get('/popup', (req, res) => {
     });
 });
 
-app.get('/api/message', (req, res) => {
+app.get('/redirect/:orderID', (req, res) => {
+    const { orderID } = req.params;
+
+    const messageData = messageStore.get(orderID);
+
+    if (!messageData) {
+        return res.redirect('/error?message=Message not found or expired');
+    }
+
+    res.render('redirect', {
+        message: messageData.message,
+        timestamp: messageData.created
+    });
+
+    // Optionally, clean up the message after displaying
+    messageStore.delete(orderID);
+});
+
+app.get('/api/order', (req, res) => {
     // Clean up old messages periodically
     cleanupOldMessages();
 
@@ -72,7 +105,8 @@ app.get('/api/message', (req, res) => {
         // Generate unique key for this message
         const orderID = generateUniqueKey();
 
-        // Store message data
+        console.log("Creating an Order",{orderID},"and storing the corresponding mandate Information");
+
         messageStore.set(orderID, {
             message: getContent(),
             timestamp: Date.now(),
@@ -80,7 +114,7 @@ app.get('/api/message', (req, res) => {
         });
 
         res.json({ orderID });
-    }, 200);
+    }, 1000);
 });
 
 app.listen(port, () => {

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
     <title>Popup Content</title>
@@ -39,27 +38,54 @@
         .popup-body {
             flex-grow: 1;
         }
+        .loading-content {
+            text-align: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
 <div class="popup-content">
     <div class="popup-header">
         <h2 id="modalTitle"><%= title %></h2>
-        <button class="close-button" id="closeButton">&times;</button>
     </div>
-    <div class="popup-body" id="modalContent">
-        <%= content %>
+    <div class="loading-content">
+        <div class="spinner"></div>
+        <h2>Loading content...</h2>
     </div>
 </div>
 <script>
-    let isClosing = false;
-
-    document.getElementById('closeButton').addEventListener('click', () => {
-        if (!isClosing) {
-            isClosing = true;
-            window.xprops.onClose();
+    async function initializePopup() {
+        if (!window.xprops) {
+            console.error('Zoid props not available');
+            return;
         }
-    });
+
+        try {
+            const data = await window.xprops.createOrder();
+            console.log(data)
+            // Redirect to the static page with data as query params
+            window.location.href = `/redirect/${data.orderID}`;
+        } catch (error) {
+            console.error('Error:', error);
+            // Optionally redirect to an error page
+            window.location.href = '/error';
+        }
+    }
+
+    window.addEventListener('load', initializePopup);
 </script>
 </body>
 </html>
