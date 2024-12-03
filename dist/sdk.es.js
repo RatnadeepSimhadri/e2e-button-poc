@@ -8455,7 +8455,7 @@ function Wi() {
 var vi = hi.exports;
 const Si = vi.create({
   tag: "my-button-component",
-  url: "http://localhost:3001/button",
+  url: "http://localhost.paypal.com:3001/button",
   dimensions: {
     width: "150px",
     height: "40px"
@@ -8480,7 +8480,7 @@ const Si = vi.create({
   }
 }), Di = vi.create({
   tag: "popup-component",
-  url: "http://localhost:3001/popup",
+  url: "http://localhost.paypal.com:3001/popup",
   dimensions: {
     width: "600px",
     height: "500px"

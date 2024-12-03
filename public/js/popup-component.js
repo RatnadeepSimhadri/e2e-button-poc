@@ -2,7 +2,7 @@ import { create } from 'zoid';
 
 export const PopupComponent = create({
     tag: 'popup-component',
-    url: 'http://localhost:3001/popup',
+    url: 'http://localhost.paypal.com:3001/popup',
     dimensions: {
         width: '600px',
         height: '500px'
