@@ -8482,8 +8482,9 @@ const Si = vi.create({
   tag: "popup-component",
   url: "http://localhost.paypal.com:3001/popup",
   dimensions: {
-    width: "600px",
-    height: "500px"
+    width: "800px",
+    height: "500px",
+    scroll: !0
   },
   props: {
     onClose: {

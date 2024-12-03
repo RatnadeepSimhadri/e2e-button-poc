@@ -92,7 +92,8 @@ app.get('/redirect/:orderID', (req, res) => {
 
     res.render('redirect', {
         message: messageData.message,
-        timestamp: messageData.created
+        timestamp: messageData.created,
+        currentTimestamp: new Date().toISOString()
     });
 
     // Optionally, clean up the message after displaying
@@ -103,7 +104,7 @@ app.get('/api/order', (req, res) => {
     // Clean up old messages periodically
     cleanupOldMessages();
 
-    setTimeout(() => {
+    setTimeout(async() => {
         // Generate unique key for this message
         const orderID = generateUniqueKey();
 
@@ -115,8 +116,15 @@ app.get('/api/order', (req, res) => {
             created: new Date().toISOString()
         });
 
+        function delay(time) {
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
+
+        await delay(2000); /* Creating a Delay */
         res.json({ orderID });
     }, 1000);
+
+
 });
 
 app.listen(PORT, () => {
