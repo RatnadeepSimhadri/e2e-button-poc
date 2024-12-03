@@ -20,6 +20,10 @@ export const PopupComponent = create({
             type: 'string',
             queryParam: true,
             default: ''
+        },
+        onApprove: {
+            type: 'function',
+            required: false
         }
     },
     defaultContext: 'popup',

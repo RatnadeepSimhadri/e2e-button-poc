@@ -22,6 +22,7 @@
             background: white;
             border-radius: 4px;
             border-left: 4px solid #007bff;
+            text-align: justify;
         }
         .timestamp {
             color: #6c757d;
@@ -31,14 +32,30 @@
         .close-btn {
             margin-top: 20px;
             padding: 8px 16px;
-            background-color: #007bff;
+            background-color: #111212;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         .close-btn:hover {
-            background-color: #0056b3;
+            background-color: #de0a0a;
+        }
+        .accept-btn {
+            margin-top: 20px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .accept-btn:hover {
+            background-color: #246703;
+        }
+        .buttonContainer {
+            display: flex;
+            justify-content: space-evenly;
         }
     </style>
     <script src="/dist/sdk.umd.js"></script>
@@ -50,7 +67,10 @@
         <%= message %>
         <div class="timestamp">Received at: <%= timestamp %></div>
     </div>
+    <div class="buttonContainer">
     <button class="close-btn" onclick="handleClose()">Close</button>
+    <button class="accept-btn" onclick="handleAccept()">Accept</button>
+    </div>
 </div>
 
 <script>
@@ -59,6 +79,13 @@
             window.close();
         } else {
             window.parent.postMessage({ type: 'zoid_close' }, '*');
+        }
+    }
+
+    function handleAccept() {
+        if(window.xprops.onApprove){
+            window.xprops.onApprove();
+            setTimeout(function(){ window.close(); }, 0);
         }
     }
 </script>

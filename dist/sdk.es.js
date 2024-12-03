@@ -8498,6 +8498,10 @@ const Si = vi.create({
       type: "string",
       queryParam: !0,
       default: ""
+    },
+    onApprove: {
+      type: "function",
+      required: !1
     }
   },
   defaultContext: "popup",

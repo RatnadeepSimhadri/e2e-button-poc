@@ -73,7 +73,6 @@
         try {
             const data = await window.xprops.createOrder();
             console.log(data)
-            // Redirect to the static page with data as query params
             window.location.href = `/redirect/${data.orderID}`;
         } catch (error) {
             console.error('Error:', error);

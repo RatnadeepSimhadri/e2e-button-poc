@@ -32,7 +32,7 @@
             try {
 
                 const { PopupComponent } = window.paypal;
-
+                let  mandateApproved = false;
                 popupInstance = PopupComponent({
                     createOrder: async () => {
                         const response =  await  window.xprops.createOrder();
@@ -40,8 +40,15 @@
                         return response;
                     },
                     onClose: () => {
-                        console.log("Popup Closed");
                         popupInstance = null;
+                        if(!mandateApproved)
+                            window.xprops.onCancel();
+
+                    },
+                    onApprove: () => {
+                        popupInstance = null
+                        mandateApproved = true
+                        window.xprops.onApprove();
                     },
                     orderID: ''
                 });
